@@ -17,7 +17,7 @@ module.exports = {
   },
   defaultSelectMenu: 'home',
   needBread: true,
-  needFooter: true,
+  needFooter: false,
 
   // 菜单是否服务端渲染，配置为true，则从store.app.menu里面拿菜单，false时，则从menu.js里面拿
   menuServer: false,

@@ -26,7 +26,7 @@ module.exports = [
     class: 'desktop',
     sub: [
       {
-        module: 'Ledger',
+        module: 'LedgerDemo',
         title: '台账式',
       },
     ],

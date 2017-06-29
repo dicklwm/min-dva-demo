@@ -8,4 +8,7 @@ module.exports = {
     login: `${apiPrefix}/admin/admin_user/login`,
     logout: `${apiPrefix}/admin/admin_user/logout`,
   },
+  user: {
+    user: `${apiPrefix}/user`,
+  },
 };
