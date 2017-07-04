@@ -2,13 +2,13 @@ import React from 'react';
 import { connect } from 'dva';
 import { Badge, Alert, Input, DatePicker, Select, Tag, Button, Icon, Popover } from 'antd';
 import { Utils } from 'min-dva';
-import Ledger from './Ledger';
+import MTable from './MTable';
 
 const { getColumns } = Utils.Table;
 const RangePicker = DatePicker.RangePicker;
 const Option = Select.Option;
 
-const namespace = 'Table/LedgerDemo';
+const namespace = 'Table/MTableDemo';
 const tableFields = [
   {
     key: 'name',
@@ -36,7 +36,10 @@ const tableFields = [
       },
     ],
     onFilter: (value, record) => record.status.indexOf(value) === 0,
-    render: value => value === '1' ? <Badge status="success" text="启用" /> : <Badge status="error" text="禁用" />,
+    render: value =>
+      value === '1' ?
+        <Badge status="success" text="启用" /> :
+        <Badge status="error" text="禁用" />,
   }];
 const tools = [
   <Alert
@@ -97,27 +100,27 @@ const tools = [
   />,
 ];
 
-function LedgerDemo({ data, loading }) {
-
-  const operatorColumn = [{
-    key: 'operator',
-    name: '操作',
-    width: 60,
-    // 扩展字段的render支持自定义渲染
-    render: (value, record) => {
-      return (
-        <div>
-          <Popover
-            trigger="click"
-            placement="bottomRight"
-          />
-          <Button icon="info" />
-        </div>
-      );
+function MTableDemo({ data, loading }) {
+  const operatorColumn = [
+    {
+      key: 'operator',
+      name: '操作',
+      width: 60,
+      // 扩展字段的render支持自定义渲染
+      render: () => {
+        return (
+          <div>
+            <Popover
+              trigger="click"
+              placement="bottomRight"
+            />
+            <Button icon="info" />
+          </div>
+        );
+      },
     },
-  }];
+  ];
   const tableColumns = getColumns(tableFields).enhance(operatorColumn).values();
-
   const tableProps = {
     columns: tableColumns,
     dataSource: data,
@@ -125,7 +128,8 @@ function LedgerDemo({ data, loading }) {
   };
 
   return (
-    <Ledger
+
+    <MTable
       tools={tools}
       tableProps={tableProps}
 
@@ -137,4 +141,4 @@ function LedgerDemo({ data, loading }) {
 // 再将其重命名为state，再返回当前namespace的state
 const mapStateToProps = ({ [namespace]: state }) => state;
 
-export default connect(mapStateToProps)(LedgerDemo);
+export default connect(mapStateToProps)(MTableDemo);

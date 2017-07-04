@@ -55,7 +55,8 @@ function RouterConfig({ history, app }) {
         },
 
         makeRoute('home', true),
-        makeRoute('Table/LedgerDemo', true),
+        makeRoute('Table/MTableDemo', true),
+        makeRoute('Table/EditTableDemo', true),
 
       ],
     },

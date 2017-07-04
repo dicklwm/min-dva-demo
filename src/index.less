@@ -51,20 +51,20 @@
   // Table 的筛选工具样式
   .table-title {
     margin-top: -16px;
-    .table-tool {
-      .ant-input-group-wrapper {
-        vertical-align: top;
-        margin-right: 6px;
-      }
+  }
+  .table-tool {
+    .ant-input-group-wrapper {
+      vertical-align: top;
+      margin-right: 6px;
+    }
 
-      label:first-child {
-        margin-left: 0;
-      }
+    label:first-child {
+      margin-left: 0;
+    }
 
-      label,
-      button {
-        margin: 0 3px;
-      }
+    label,
+    button {
+      margin: 0 3px;
     }
   }
   // 单双行背景
@@ -150,6 +150,23 @@
     font-size: 12px !important;
     overflow-y: hidden;
     background-color: @body-background-color;
+  }
+
+  .ant-menu-dark.ant-menu-inline {
+    //主菜单的字体大小
+    .ant-menu-submenu-title,
+    .ant-menu-item {
+      font-size: @menu-submenu-fontsize;
+    }
+    //子菜单的各item
+    .ant-menu-sub {
+      .ant-menu-item {
+        //子菜单的文字大小
+        a {
+          font-size: @menu-item-fontsize;
+        }
+      }
+    }
   }
   .ant-modal-mask {
     background-color: rgba(55, 55, 55, 0.2);

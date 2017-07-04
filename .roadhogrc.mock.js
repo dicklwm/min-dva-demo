@@ -9,7 +9,8 @@ export default {
         "id|+1": 1,
         "name" : '@name',
         "email": '@email',
-        "status|1" : ['1','2']
+        "status|1" : ['1','2'],
+        "create_at" : '@datetime',
       }
     ]
   })

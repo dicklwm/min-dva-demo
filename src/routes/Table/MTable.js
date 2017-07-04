@@ -2,7 +2,7 @@ import React from 'react';
 import { Table, Pagination } from 'antd';
 import { needBread } from '../../utils/config';
 
-function Ledger({ tools, tableProps, paginationProps }) {
+function MTable({ tools, tableProps, paginationProps }) {
   return (
     <div>
       <Table
@@ -43,4 +43,4 @@ function Ledger({ tools, tableProps, paginationProps }) {
   );
 }
 
-export default Ledger;
+export default MTable;
