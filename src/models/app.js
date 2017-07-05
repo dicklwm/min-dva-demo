@@ -90,16 +90,19 @@ export default {
     },
     // 点击小屏幕菜单
     switchMenuPopver(state, action) {
-      return {
-        ...state,
-        menuPopoverVisible: action.payload,
-      };
+      if (!state.isNavbar) {
+        return {
+          ...state,
+          menuPopoverVisible: action.payload,
+        };
+      }
+      return state;
     },
     // 改变菜单
-    changeMenu(state, action) {
+    changeMenu(state, { payload }) {
       return {
         ...state,
-        menuOpenKeys: state.siderFold ? action.payload : [action.payload[1]],
+        menuOpenKeys: state.siderFold ? payload : [payload[1]],
       };
     },
     changeNavbar(state) {

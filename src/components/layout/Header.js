@@ -41,7 +41,7 @@ function Header({
     menu,
   };
   return (
-    <div className={styles.header}>
+    <div className={styles.header} id="header">
       {
         isNavbar ?
           <Popover placement="bottomLeft" onVisibleChange={switchMenuPopover} visible={menuPopoverVisible}

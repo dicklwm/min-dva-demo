@@ -2,9 +2,9 @@
 import React from 'react';
 import { connect } from 'dva';
 import { Badge, Alert, Input, DatePicker, Select, Tag, Button, Icon } from 'antd';
-import { Utils } from 'min-dva';
-import MEditTable from './MEditTable';
-import MTable from './MTable';
+import { Utils, MEditTable, MTable } from 'min-dva';
+// import MEditTable from './MEditTable';
+// import MTable from './MTable';
 
 const { getColumns } = Utils.Table;
 const RangePicker = DatePicker.RangePicker;
@@ -70,7 +70,7 @@ const tools = [
     }
   />,
 ];
-
+console.log(MEditTable);
 class EditTableDemo extends MEditTable {
 
   constructor(props) {
@@ -108,7 +108,8 @@ class EditTableDemo extends MEditTable {
       {
         key: 'status',
         name: '状态',
-        width: 80,
+        width: 50,
+        style: { width: 80 },
         filters: [
           {
             text: <Badge status="success" text="启用" />,

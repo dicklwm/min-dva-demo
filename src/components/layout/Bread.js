@@ -54,7 +54,7 @@ function Bread({ location, menu }) {
   });
 
   return (
-    <div className={styles.bread}>
+    <div className={styles.bread} id="bread">
       <Breadcrumb className={styles.item}>
         <Breadcrumb.Item
           key="home"
