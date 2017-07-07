@@ -1,4 +1,5 @@
 /** Created by Min on 2017-07-04.  */
+import { message } from 'antd';
 import { Model } from 'min-dva';
 import * as Service from '../../services/LedgerDemo';
 
@@ -18,6 +19,36 @@ export default Model.extend({
     *fetch(action, { callWithLoading, put }) {
       const res = yield callWithLoading(Service.userData);
       if (res.errorCode === 0) {
+        yield put({
+          type: 'fetchSuccess',
+          payload: res.data,
+        });
+      }
+    },
+    *add_user({ payload }, { callWithLoading, put }) {
+      const res = yield callWithLoading(Service.add_user, payload);
+      if (res.errorCode === 0) {
+        message.success(res.msg);
+        yield put({
+          type: 'fetchSuccess',
+          payload: res.data,
+        });
+      }
+    },
+    *edit_user({ payload }, { callWithLoading, put }) {
+      const res = yield callWithLoading(Service.edit_user, payload);
+      if (res.errorCode === 0) {
+        message.success(res.msg);
+        yield put({
+          type: 'fetchSuccess',
+          payload: res.data,
+        });
+      }
+    },
+    *delete_user({ payload }, { callWithLoading, put }) {
+      const res = yield callWithLoading(Service.delete_user, payload);
+      if (res.errorCode === 0) {
+        message.success(res.msg);
         yield put({
           type: 'fetchSuccess',
           payload: res.data,

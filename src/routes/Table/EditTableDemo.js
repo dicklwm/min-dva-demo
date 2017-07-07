@@ -3,8 +3,7 @@ import React from 'react';
 import { connect } from 'dva';
 import { Badge, Alert, Input, DatePicker, Select, Tag, Button, Icon } from 'antd';
 import { Utils, MEditTable, MTable } from 'min-dva';
-// import MEditTable from './MEditTable';
-// import MTable from './MTable';
+import PopAddDemo from '../../components/Table/PopAddDemo';
 
 const { getColumns } = Utils.Table;
 const RangePicker = DatePicker.RangePicker;
@@ -12,65 +11,6 @@ const Option = Select.Option;
 
 const namespace = 'Table/EditTableDemo';
 
-const tools = [
-  <Alert
-    key="alert-tool"
-    type="info"
-    message={
-      <div className="table-tool">
-        <Input
-          placeholder="输入产品名，SDK包名查询"
-          addonBefore={<Icon type="search" />}
-          style={{ marginRight: 12 }}
-        />
-        <label
-          style={{ marginRight: 12 }}
-          htmlFor="RangePicker"
-        >
-          上传时间：
-          <RangePicker
-            id="RangePicker"
-          />
-        </label>
-
-        <label htmlFor="status">
-          状态：
-          <Select
-            id="status"
-            style={{ width: 90, marginRight: 12 }}
-            placeholder="选择状态"
-          >
-            <Option value="1">
-              <span>
-                <Tag color="green">
-                  <Icon type="check" />启用</Tag>
-              </span>
-            </Option>
-            <Option value="2">
-              <span>
-                <Tag color="red">
-                  <Icon type="close" />禁用</Tag>
-              </span>
-            </Option>
-          </Select>
-        </label>
-
-        <Button
-          icon="search"
-          type="primary"
-        >
-          搜索
-        </Button>
-        <Button
-          icon="delete"
-        >
-          重置
-        </Button>
-      </div>
-    }
-  />,
-];
-console.log(MEditTable);
 class EditTableDemo extends MEditTable {
 
   constructor(props) {
@@ -78,15 +18,91 @@ class EditTableDemo extends MEditTable {
     // 请改写namespace
     // 因为需要连接model的命名空间才可以触发对应reducer或者effect
     this.namespace = namespace;
+    this.tools = [
+      <Alert
+        key="alert-tool"
+        type="info"
+        message={
+          <div className="table-tool">
+            <Input
+              placeholder="输入名称或邮箱"
+              addonBefore={<Icon type="search" />}
+              style={{ marginRight: 12 }}
+            />
+            <label
+              style={{ marginRight: 12 }}
+              htmlFor="RangePicker"
+            >
+              上传时间：
+              <RangePicker
+                id="RangePicker"
+              />
+            </label>
+
+            <label htmlFor="status">
+              状态：
+              <Select
+                id="status"
+                style={{ width: 90, marginRight: 12 }}
+                placeholder="选择状态"
+              >
+                <Option value="1">
+                  <span>
+                    <Tag color="green">
+                      <Icon type="check" />启用</Tag>
+                  </span>
+                </Option>
+                <Option value="2">
+                  <span>
+                    <Tag color="red">
+                      <Icon type="close" />禁用</Tag>
+                  </span>
+                </Option>
+              </Select>
+            </label>
+
+            <Button
+              icon="search"
+              type="primary"
+            >
+              搜索
+            </Button>
+            <Button
+              icon="delete"
+            >
+              重置
+            </Button>
+          </div>
+        }
+      />,
+      <div key="table-tool" className="table-tool" style={{ marginTop: 12 }}>
+        <PopAddDemo
+          dispatch={this.props.dispatch}
+        >
+          <Button
+            icon="plus"
+            type="primary"
+          >
+            新增用户
+          </Button>
+        </PopAddDemo>
+      </div>,
+    ];
   }
 
   handleSave = (changeData) => {
     // 返回了changeData，一整行可编辑的数据和对应行的id
     // 可以将changeData触发effect保存到服务器，或者先保存到model里面
-    console.log(changeData);
+    this.props.dispatch({
+      type: `${namespace}/edit_user`,
+      payload: changeData,
+    });
   }
   handleDelete= (id) => {
-    console.log(id);
+    this.props.dispatch({
+      type: `${namespace}/delete_user`,
+      payload: id,
+    })
   }
 
   render() {
@@ -161,11 +177,10 @@ class EditTableDemo extends MEditTable {
     const tableProps = {
       columns: tableColumns,
       dataSource: this.props.data,
-      loading: this.props.loading,
     };
     return (
       <MTable
-        tools={tools}
+        tools={this.tools}
         tableProps={tableProps}
       />
     );
