@@ -1,17 +1,5 @@
-import Mock from 'mockjs';
-
-export default {
-  'GET /user': Mock.mock({
-    errorCode:0,
-    msg: 'success',
-    "data|10-30": [
-      {
-        "id|+1": 1,
-        "name" : '@name',
-        "email": '@email',
-        "status|1" : ['1','2'],
-        "create_at" : '@datetime',
-      }
-    ]
-  })
-};
+const mock = {}
+require('fs').readdirSync(require('path').join(__dirname + '/mock')).forEach(function(file) {
+  Object.assign(mock, require('./mock/' + file))
+})
+module.exports = mock
