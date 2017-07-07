@@ -9,7 +9,7 @@ module.exports = {
   logoText: 'Min-Dva', // 登录后logo旁的Text
   // 登陆配置
   loginConfig: {
-    needLogin: false,
+    needLogin: true,
     needCaptcha: false,
     CaptchaAddress: '/captcha.html',
     needRegister: false, // 是否需要注册按钮

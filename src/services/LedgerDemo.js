@@ -1,12 +1,10 @@
 /** Created by Min on 2017/6/29.  */
-import request from '../utils/request';
-import { parseParam } from '../utils/func';
-import { user } from '../utils/api';
+import { user, makeService } from '../utils/api';
 
-export async function userData(params) {
-  return request(user.user, {
-    method: 'GET',
-    credentials: 'include',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
-  });
-}
+export const userData = makeService(user.user);
+
+export const add_user = makeService(user.add_user, 'POST');
+
+export const edit_user = makeService(user.edit_user, 'POST');
+
+export const delete_user = makeService(user.delete_user, 'POST');
