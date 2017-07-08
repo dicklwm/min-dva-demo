@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'dva';
 import { Badge, Alert, Input, DatePicker, Select, Tag, Button, Icon, Popover } from 'antd';
 import { Utils, MTable } from 'min-dva';
-// import MTable from './MTable';
 
 const { getColumns } = Utils.Table;
 const RangePicker = DatePicker.RangePicker;

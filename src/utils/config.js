@@ -24,4 +24,4 @@ module.exports = {
 
 };
 
-window.version = 'Min-Dva 2017-6-28 v0.1.0';
+window.version = 'Min-Dva-Demo v0.2.0';
