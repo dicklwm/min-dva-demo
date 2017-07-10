@@ -18,7 +18,25 @@ class EditTableDemo extends MEditTable {
     // 请改写namespace
     // 因为需要连接model的命名空间才可以触发对应reducer或者effect
     this.namespace = namespace;
-    this.tools = [
+  }
+
+  handleSave = (changeData) => {
+    // 返回了changeData，一整行可编辑的数据和对应行的id
+    // 可以将changeData触发effect保存到服务器，或者先保存到model里面
+    this.props.dispatch({
+      type: `${namespace}/edit_user`,
+      payload: changeData,
+    });
+  }
+  handleDelete = (id) => {
+    this.props.dispatch({
+      type: `${namespace}/delete_user`,
+      payload: id,
+    });
+  }
+
+  render() {
+    const tools = [
       <Alert
         key="alert-tool"
         type="info"
@@ -28,6 +46,9 @@ class EditTableDemo extends MEditTable {
               placeholder="输入名称或邮箱"
               addonBefore={<Icon type="search" />}
               style={{ marginRight: 12 }}
+              value={this.props.query.keyword}
+              onPressEnter={this.handleRefresh}
+              onChange={e => this.handleQueryChange('keyword', e.target.value)}
             />
             <label
               style={{ marginRight: 12 }}
@@ -36,6 +57,13 @@ class EditTableDemo extends MEditTable {
               上传时间：
               <RangePicker
                 id="RangePicker"
+                value={this.props.query.dates}
+                onChange={
+                  (value) => {
+                    this.handleQueryChange('dates', value);
+                    this.handleRefresh();
+                  }
+                }
               />
             </label>
 
@@ -45,6 +73,11 @@ class EditTableDemo extends MEditTable {
                 id="status"
                 style={{ width: 90, marginRight: 12 }}
                 placeholder="选择状态"
+                value={this.props.query.status}
+                onChange={(value) => {
+                  this.handleQueryChange('status', value);
+                  this.handleRefresh();
+                }}
               >
                 <Option value="1">
                   <span>
@@ -64,11 +97,13 @@ class EditTableDemo extends MEditTable {
             <Button
               icon="search"
               type="primary"
+              onClick={this.handleRefresh}
             >
               搜索
             </Button>
             <Button
               icon="delete"
+              onClick={this.handleClearQuery}
             >
               重置
             </Button>
@@ -88,24 +123,6 @@ class EditTableDemo extends MEditTable {
         </PopAddDemo>
       </div>,
     ];
-  }
-
-  handleSave = (changeData) => {
-    // 返回了changeData，一整行可编辑的数据和对应行的id
-    // 可以将changeData触发effect保存到服务器，或者先保存到model里面
-    this.props.dispatch({
-      type: `${namespace}/edit_user`,
-      payload: changeData,
-    });
-  }
-  handleDelete= (id) => {
-    this.props.dispatch({
-      type: `${namespace}/delete_user`,
-      payload: id,
-    })
-  }
-
-  render() {
     const tableFields = [
       {
         key: 'name',
@@ -180,7 +197,7 @@ class EditTableDemo extends MEditTable {
     };
     return (
       <MTable
-        tools={this.tools}
+        tools={tools}
         tableProps={tableProps}
       />
     );

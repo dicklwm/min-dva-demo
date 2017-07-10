@@ -1,8 +1,9 @@
 /** Created by Min on 2017-07-07.  */
 import Mock from 'mockjs';
+import moment from 'moment';
 
 const userData = Mock.mock({
-  'data|5': [
+  'data|10-30': [
     {
       id: '@id',
       name: '@cname',
@@ -14,10 +15,27 @@ const userData = Mock.mock({
 });
 
 export default {
-  'GET /user': {
-    errorCode: 0,
-    msg: 'success',
-    data: userData.data,
+  'GET /user': (req, res) => {
+    const { keyword, start_date, end_date, status } = req.query;
+    let data = userData.data;
+    if (keyword) {
+      data = data.filter(item =>
+      (item.name.toLocaleUpperCase().search(keyword.toLocaleUpperCase()) >= 0) ||
+      (item.email.toLocaleUpperCase().search(keyword.toLocaleUpperCase()) >= 0),
+      );
+    }
+    if (start_date && end_date) {
+      data = data.filter(item => moment(item.create_at).isBetween(start_date, end_date));
+    }
+    if (status) {
+      data = data.filter(item => item.status === `${status}`);
+    }
+    res.json({
+      errorCode: 0,
+      msg: 'success',
+      data,
+      total: data.length,
+    });
   },
   'POST /add_user': (req, res) => {
     userData.data.unshift(Mock.mock({

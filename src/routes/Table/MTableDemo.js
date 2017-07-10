@@ -21,6 +21,11 @@ const tableFields = [
     width: 100,
   },
   {
+    key: 'create_at',
+    title: '创建时间',
+    width: 150,
+  },
+  {
     key: 'status',
     name: '状态',
     width: 50,
@@ -40,66 +45,8 @@ const tableFields = [
         <Badge status="success" text="启用" /> :
         <Badge status="error" text="禁用" />,
   }];
-const tools = [
-  <Alert
-    key="alert-tool"
-    type="info"
-    message={
-      <div className="table-tool">
-        <Input
-          placeholder="输入产品名，SDK包名查询"
-          addonBefore={<Icon type="search" />}
-          style={{ marginRight: 12 }}
-        />
-        <label
-          style={{ marginRight: 12 }}
-          htmlFor="RangePicker"
-        >
-          上传时间：
-          <RangePicker
-            id="RangePicker"
-          />
-        </label>
 
-        <label htmlFor="status">
-          状态：
-          <Select
-            id="status"
-            style={{ width: 90, marginRight: 12 }}
-            placeholder="选择状态"
-          >
-            <Option value="1">
-              <span>
-                <Tag color="green">
-                  <Icon type="check" />启用</Tag>
-              </span>
-            </Option>
-            <Option value="2">
-              <span>
-                <Tag color="red">
-                  <Icon type="close" />禁用</Tag>
-              </span>
-            </Option>
-          </Select>
-        </label>
-
-        <Button
-          icon="search"
-          type="primary"
-        >
-          搜索
-        </Button>
-        <Button
-          icon="delete"
-        >
-          重置
-        </Button>
-      </div>
-    }
-  />,
-];
-
-function MTableDemo({ data, loading }) {
+function MTableDemo({ data, loading, query, dispatch }) {
   const operatorColumn = [
     {
       key: 'operator',
@@ -119,19 +66,116 @@ function MTableDemo({ data, loading }) {
       },
     },
   ];
+  const tools = [
+    <Alert
+      key="alert-tool"
+      type="info"
+      message={
+        <div className="table-tool">
+          <Input
+            placeholder="输入名称或邮箱"
+            addonBefore={<Icon type="search" />}
+            style={{ marginRight: 12 }}
+            value={query.keyword}
+            onPressEnter={handleRefresh}
+            onChange={e => handleQueryChange('keyword', e.target.value)}
+          />
+          <label
+            style={{ marginRight: 12 }}
+            htmlFor="RangePicker"
+          >
+            上传时间：
+            <RangePicker
+              id="RangePicker"
+              value={query.dates}
+              onChange={
+                (value) => {
+                  handleQueryChange('dates', value);
+                  handleRefresh();
+                }
+              }
+            />
+          </label>
+
+          <label htmlFor="status">
+            状态：
+            <Select
+              id="status"
+              style={{ width: 90, marginRight: 12 }}
+              placeholder="选择状态"
+              value={query.status}
+              onChange={(value) => {
+                handleQueryChange('status', value);
+                handleRefresh();
+              }}
+            >
+              <Option value="1">
+                <span>
+                  <Tag color="green">
+                    <Icon type="check" />启用</Tag>
+                </span>
+              </Option>
+              <Option value="2">
+                <span>
+                  <Tag color="red">
+                    <Icon type="close" />禁用</Tag>
+                </span>
+              </Option>
+            </Select>
+          </label>
+
+          <Button
+            icon="search"
+            type="primary"
+            onClick={handleRefresh}
+          >
+            搜索
+          </Button>
+          <Button
+            icon="delete"
+            onClick={handleClearQuery}
+          >
+            重置
+          </Button>
+        </div>
+      }
+    />,
+  ];
   const tableColumns = getColumns(tableFields).enhance(operatorColumn).values();
   const tableProps = {
     columns: tableColumns,
     dataSource: data,
     loading,
   };
+  function handleQueryChange(key, value) {
+    dispatch({
+      type: `${namespace}/queryDataChange`,
+      payload: {
+        [key]: value,
+      },
+    });
+  }
+
+  function handleClearQuery() {
+    dispatch({
+      type: `${namespace}/clearQuery`,
+    });
+    handleRefresh();
+  }
+
+  function handleRefresh() {
+    dispatch({
+      type: `${namespace}/fetch`,
+    });
+  }
 
   return (
 
     <MTable
       tools={tools}
       tableProps={tableProps}
-
+      type="max"
+      height={500}
     />
 
   );
