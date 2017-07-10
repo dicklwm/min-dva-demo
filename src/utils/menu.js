@@ -27,11 +27,11 @@ module.exports = [
     sub: [
       {
         module: 'MTableDemo',
-        title: '台账式',
+        title: 'MTable台账式Demo',
       },
       {
         module: 'EditTableDemo',
-        title: '可编辑表格',
+        title: 'EditTable可编辑表格Demo',
       },
     ],
   },
