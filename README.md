@@ -1,9 +1,9 @@
-# min-dva
+# min-dva、min-dva-demo
 
 [![npm](https://img.shields.io/npm/v/min-dva.svg)](https://www.npmjs.com/package/min-dva)
 [![NPM downloads](http://img.shields.io/npm/dm/min-dva.svg?style=flat)](https://npmjs.org/package/min-dva)
 
-#### 基于React、[dva](https://github.com/dvajs/dva)、[antd](https://github.com/ant-design/ant-design)的便捷式开发Demo
+#### 对[dva](https://github.com/dvajs/dva)、[antd](https://github.com/ant-design/ant-design)进行扩展的的便捷式开发Demo
 
  ## 特性
  
@@ -37,6 +37,9 @@
  - [Form工具类](https://github.com/dicklwm/min-dva/blob/master/src/utils/form/README.md)
  - [Model 工具类](https://github.com/dicklwm/min-dva/blob/master/src/utils/model/README.md)
  - [Table工具类](https://github.com/dicklwm/min-dva/blob/master/src/utils/table/README.md)
+ 
+ ## 模板使用
+ - **[min-dva-admin](https://github.com/dicklwm/min-dva-admin)** 
  
  ## 快速上手
  - [30分钟学会编写`台账式模板`]()
